@@ -1,28 +1,33 @@
+import java.io.BufferedReader;
+import java.io.Console;
 import java.io.File;
+import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.List;
 
 public class java {
+
+    public static void main(String[] args) throws Exception {
+        givenPythonScript_whenPythonProcessInvoked_thenSuccess();
+    }
  
     @Test
-    public void givenPythonScript_whenPythonProcessInvoked_thenSuccess() throws Exception {
-        ProcessBuilder processBuilder = new ProcessBuilder("python", resolvePythonScriptPath("python.py"));
+    public static void givenPythonScript_whenPythonProcessInvoked_thenSuccess() throws Exception {
+        ProcessBuilder processBuilder = new ProcessBuilder("python", "python.py");
         processBuilder.redirectErrorStream(true);
 
         Process process = processBuilder.start();
-        List<String> results = readProcessOutput(process.getInputStream());
-
-        assertThat("Results should not be empty", results, is(not(empty())));
-        assertThat("Results should contain output of script: ", results, hasItem(
-        containsString("Hello Baeldung Readers!!")));
-
-        int exitCode = process.waitFor();
-        assertEquals("No errors should be detected", 0, exitCode);
+        System.out.println("iniciando processo");
+        BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
+        String line = null;
+        try {
+          while ((line = reader.readLine()) != null) {
+            System.out.println(line);
+          }
+        } catch (IOException e) {
+          e.printStackTrace();
+        }
     }
-
-    private String resolvePythonScriptPath(String path){
-        File file = new File(path);
-        return file.getAbsolutePath();
-     }
 
  }

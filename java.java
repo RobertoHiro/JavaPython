@@ -6,6 +6,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.List;
 
+
 public class java {
 
     public static void main(String[] args) throws Exception {
@@ -14,7 +15,7 @@ public class java {
  
     @Test
     public static void givenPythonScript_whenPythonProcessInvoked_thenSuccess() throws Exception {
-        ProcessBuilder processBuilder = new ProcessBuilder("python", "python.py");
+        ProcessBuilder processBuilder = new ProcessBuilder("python", "python.py", "joãozinho", "17");
         processBuilder.redirectErrorStream(true);
 
         Process process = processBuilder.start();
@@ -24,6 +25,13 @@ public class java {
         try {
           while ((line = reader.readLine()) != null) {
             System.out.println(line);
+            /*
+            try {
+                new JSONObject(json);
+            } catch (JSONException e) {
+                System.out.println("Json invalido");
+            }
+             */
           }
         } catch (IOException e) {
           e.printStackTrace();
